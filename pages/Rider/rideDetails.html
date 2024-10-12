@@ -55,14 +55,16 @@
         </a>
     </div> -->
 
-    <div class="w-full h-auto flex justify-center mt-3 md:mt-10 bg-contain bg-no-repeat" style="background-image: url('../../images/pattern1.png');">
+
+    <div class="w-full h-auto flex justify-center mt-3 md:mt-10 bg-contain bg-no-repeat"
+        style="background-image: url('../../images/pattern1.png');">
         <div class="md:w-[900px] w-full h-auto shadow-2xl bg-white px-6 py-8">
             <div class="text-center p-4">
                 <span class="text-md">Fill the Details for
                     <span class="text-3xl font-bold text-yellow-600">Ride.</span>
                 </span>
             </div>
-    
+
             <!-- Form Content -->
             <div>
                 <div class="md:flex md:space-x-4 space-y-4 md:space-y-0 justify-center">
@@ -75,74 +77,107 @@
                     </div>
                     <!-- Contact Number -->
                     <div class="w-full md:w-1/2">
-                        <label for="contactNumber" class="block text-sm font-medium text-gray-700">Contact Number</label>
+                        <label for="contactNumber" class="block text-sm font-medium text-gray-700">Contact
+                            Number</label>
                         <input type="number" id="contactNumber"
                             class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500"
                             placeholder="Enter your Contact number">
                     </div>
                 </div>
-    
+
                 <div class="md:flex md:space-x-4 space-y-4 md:space-y-0 justify-center mt-6">
                     <!-- Starting Location -->
                     <div class="w-full md:w-1/2">
-                        <label for="startingLocation" class="block text-sm font-medium text-gray-700">Starting Location</label>
+                        <label for="startingLocation" class="block text-sm font-medium text-gray-700">Starting
+                            Location</label>
                         <input type="text" id="startingLocation"
                             class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500"
                             placeholder="Enter starting location">
                     </div>
+                    <div class="w-full md:w-1/2">
+                        <label for="startingLocation" class="block text-sm font-medium text-gray-700">End
+                            Location</label>
+                        <input type="text" id="startingLocation"
+                            class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500"
+                            placeholder="Enter ending location">
+                    </div>
                     <!-- Number of Passengers -->
                     <div class="w-full md:w-1/2">
-                        <label for="passengerCount" class="block text-sm font-medium text-gray-700">Number of Passengers</label>
+                        <label for="passengerCount" class="block text-sm font-medium text-gray-700">Available
+                            Seats:</label>
                         <input type="number" id="passengerCount"
                             class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500"
                             placeholder="Enter number of passengers" value="2">
                     </div>
                 </div>
-    
+
                 <!-- Co-Passenger Fields -->
                 <div class="md:flex justify-center space-x-4 mt-6 space-y-4 md:space-y-0">
                     <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
                         <!-- Co-passenger Name -->
                         <div>
-                            <label for="coPassengerName" class="block text-sm font-medium text-gray-700">Co-Passenger's Name</label>
+                            <label for="coPassengerName"
+                                class="block text-sm font-medium text-gray-700">Licence:</label>
                             <input type="text" id="coPassengerName"
                                 class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500"
-                                placeholder="Enter Co-Passenger's name">
+                                placeholder="Enter Licence Number">
                         </div>
                         <!-- Co-passenger Age -->
                         <div>
-                            <label for="coPassengerAge" class="block text-sm font-medium text-gray-700">Co-Passenger's Age</label>
-                            <input type="number" id="coPassengerAge"
+                            <label for="coPassengerName"
+                                class="block text-sm font-medium text-gray-700">Vehicle:</label>
+                            <input type="text" id="coPassengerName"
                                 class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500"
-                                placeholder="Enter Co-Passenger's age">
+                                placeholder="Vehicle Name">
                         </div>
-                        <!-- Add Button -->
-                        <div class="flex items-center md:pt-5">
-                            <button onclick="addNameField()"
-                                class="text-sm bg-lime-700 font-bold px-4 py-2 rounded-lg text-white">ADD</button>
+                        <div>
+                            <label for="coPassengerAge"
+                                class="block text-sm font-medium text-gray-700">Insurance</label>
+                            <select
+                                class="bg-gray-50 border-none shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 rounded-t-lg  block w-full px-3 py-2 ">
+                                <option value="">Yes</option>
+                                <option value="">No</option>
+                            </select>
                         </div>
                     </div>
                 </div>
-    
-                <!-- Dynamically Added Co-Passengers -->
-                <div class="block flex justify-center mt-6">
-                    <ul id="nameList" class="w-full md:w-2/3">
-                        <li class="flex justify-between items-center py-2">
-                            <label for="" id="nameAdded" class="w-full px-4 py-2 border rounded-md shadow-sm">Maria (24)</label>
-                            <button onclick="removeNameField()"
-                                class="text-2xl bg-orange-700 font-bold px-3 py-1 rounded-lg text-white">-</button>
-                        </li>
-                    </ul>
+                <div class="md:flex justify-center space-x-4 mt-6 space-y-4 md:space-y-0">
+                    <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+                        <!-- Co-passenger Name -->
+                        <div>
+                            <label for="coPassengerName"
+                                class="block text-sm font-medium text-gray-700">Registration Number:</label>
+                            <input type="text" id="coPassengerName"
+                                class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500"
+                                placeholder="Enter Registration Number">
+                        </div>
+                        <!-- Co-passenger Age -->
+                        <div>
+                            <label for="coPassengerName"
+                                class="block text-sm font-medium text-gray-700">Model:</label>
+                            <input type="text" id="coPassengerName"
+                                class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500"
+                                placeholder="Enter Model Number">
+                        </div>
+                        <div>
+                            <label for="coPassengerAge"
+                                class="block text-sm font-medium text-gray-700">A/C:</label>
+                            <select
+                                class="bg-gray-50 border-none shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 rounded-t-lg  block w-full px-3 py-2 ">
+                                <option value="">Yes</option>
+                                <option value="">No</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-    
             </div>
-    
+
             <!-- Continue Button -->
             <div class="flex justify-center mx-5 my-4">
                 <a href="./confirmation.html">
                     <button type="button"
                         class="inline-block w-full md:w-auto rounded bg-yellow-500 px-10 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-300 active:bg-yellow-700">
-                        Continue
+                      <a href="./RequestList.html">Continue</a>  
                     </button>
                 </a>
             </div>
@@ -154,8 +189,9 @@
 
 
 
+
     <footer>
-        <div class="text-center p-2 text-sm">
+        <div class="text-center p-2 text-sm mt-10">
             Copyright © <span id="get-current-year">2021</span>
         </div>
     </footer>

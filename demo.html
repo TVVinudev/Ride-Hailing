@@ -1,107 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rating and Comment Section</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .star {
-            cursor: pointer;
-            transition: color 0.2s ease-in-out;
-        }
-        .filled {
-            color: gold;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taxi Bill</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom CSS */
+    body {
+      background-color: #f3f4f6;
+    }
+
+    .print-btn:hover {
+      background-color: #4a5568; /* Darker shade on hover */
+    }
+  </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white shadow-lg rounded-lg p-6 max-w-lg w-full">
-        <h2 class="text-xl font-bold mb-4">Rate our application</h2>
+<body class="flex justify-center items-center min-h-screen bg-gray-100">
+  <!-- Bill Container -->
+  <div class="bg-white rounded-lg shadow-md p-6 w-full max-w-lg">
+    <!-- Taxi Company Name -->
+    <h2 class="text-2xl font-bold text-gray-700 text-center mb-4">Taxi Service Bill</h2>
 
-        <!-- Rating Section -->
-        <div class="flex items-center mb-4">
-            <span class="text-gray-600 mr-4">Rating:</span>
-            <div id="star-rating" class="flex">
-                <!-- SVG stars with classes and data-value attributes -->
-                <svg data-value="1" class="star w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 17.27l6.18 3.73-1.64-7.03L21 9.24l-7.19-.61L12 2 10.19 8.63 3 9.24l5.46 4.73-1.64 7.03L12 17.27z"/>
-                </svg>
-                <svg data-value="2" class="star w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 17.27l6.18 3.73-1.64-7.03L21 9.24l-7.19-.61L12 2 10.19 8.63 3 9.24l5.46 4.73-1.64 7.03L12 17.27z"/>
-                </svg>
-                <svg data-value="3" class="star w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 17.27l6.18 3.73-1.64-7.03L21 9.24l-7.19-.61L12 2 10.19 8.63 3 9.24l5.46 4.73-1.64 7.03L12 17.27z"/>
-                </svg>
-                <svg data-value="4" class="star w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 17.27l6.18 3.73-1.64-7.03L21 9.24l-7.19-.61L12 2 10.19 8.63 3 9.24l5.46 4.73-1.64 7.03L12 17.27z"/>
-                </svg>
-                <svg data-value="5" class="star w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 17.27l6.18 3.73-1.64-7.03L21 9.24l-7.19-.61L12 2 10.19 8.63 3 9.24l5.46 4.73-1.64 7.03L12 17.27z"/>
-                </svg>
-            </div>
-        </div>
-
-        <!-- Comment Section -->
-        <div class="mb-4">
-            <label for="comment" class="block text-gray-600 mb-2">Your Comment:</label>
-            <textarea id="comment" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4"></textarea>
-        </div>
-
-        <button id="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:ring-4 focus:ring-blue-300">Submit</button>
-
-        <!-- Display the result -->
-        <div id="result" class="mt-4"></div>
+    <!-- Driver & Passenger Information -->
+    <div class="mb-4">
+      <h3 class="text-lg font-semibold text-gray-600">Driver Info:</h3>
+      <p class="text-sm text-gray-500">Driver: John Doe</p>
+      <p class="text-sm text-gray-500">License Number: TX-12345</p>
     </div>
 
-    <script>
-        const stars = document.querySelectorAll('.star');
-        const result = document.getElementById('result');
-        let ratingValue = 0;
+    <!-- Ride Information -->
+    <div class="mb-4">
+      <h3 class="text-lg font-semibold text-gray-600">Ride Details:</h3>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <p class="text-sm text-gray-500">Date: 12th Oct 2024</p>
+          <p class="text-sm text-gray-500">Distance: 12.5 km</p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Time: 18:30</p>
+          <p class="text-sm text-gray-500">Duration: 25 mins</p>
+        </div>
+      </div>
+    </div>
 
-        // Hover functionality to preview rating without locking in
-        stars.forEach(star => {
-            star.addEventListener('mouseover', function () {
-                const hoverValue = this.getAttribute('data-value');
-                highlightStars(hoverValue);  // Temporarily highlight stars based on hover
-            });
+    <!-- Fare Details -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold text-gray-600">Fare Breakdown:</h3>
+      <div class="grid grid-cols-2 gap-4 text-sm">
+        <p class="text-gray-500">Base Fare:</p>
+        <p class="text-right text-gray-600">$3.50</p>
+        <p class="text-gray-500">Distance Fare (per km):</p>
+        <p class="text-right text-gray-600">$10.00</p>
+        <p class="text-gray-500">Time Fare (per minute):</p>
+        <p class="text-right text-gray-600">$5.00</p>
+        <p class="text-gray-500">Additional Fees:</p>
+        <p class="text-right text-gray-600">$2.00</p>
+        <p class="text-gray-600 font-bold">Total Fare:</p>
+        <p class="text-right font-bold text-gray-900">$20.50</p>
+      </div>
+    </div>
 
-            star.addEventListener('mouseout', function () {
-                highlightStars(ratingValue); // Revert to locked rating when hover ends
-            });
-        });
+    <!-- Payment Method -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold text-gray-600">Payment Method:</h3>
+      <p class="text-sm text-gray-500">Paid by: Credit Card</p>
+      <p class="text-sm text-gray-500">Card ending in: **** 1234</p>
+    </div>
 
-        // Add click event for stars to lock the selected rating
-        stars.forEach(star => {
-            star.addEventListener('click', function () {
-                ratingValue = this.getAttribute('data-value');  // Get the rating value from the clicked star
-                highlightStars(ratingValue);  // Lock the stars up to the clicked rating
-            });
-        });
-
-        // Function to highlight stars based on rating
-        function highlightStars(value) {
-            stars.forEach((star, index) => {
-                if (index < value) {
-                    star.classList.add('filled');
-                    star.classList.add('text-yellow-400');  // Use Tailwind's yellow color for filled stars
-                } else {
-                    star.classList.remove('filled');
-                    star.classList.remove('text-yellow-400'); // Remove filled class for unselected stars
-                }
-            });
-        }
-
-        // Handle submit button click
-        document.getElementById('submit').addEventListener('click', function () {
-            const comment = document.getElementById('comment').value;  // Get comment text
-            if (ratingValue === 0) {
-                result.innerHTML = `<p class="text-red-600">Please select a star rating before submitting.</p>`;
-            } else {
-                result.innerHTML = `<p class="text-gray-600">You rated <strong>${ratingValue} stars</strong> with the comment:</p>
-                                    <p class="italic">"${comment}"</p>`;
-            }
-        });
-    </script>
+    <!-- Print Button -->
+    <div class="text-center">
+      <button 
+        class="print-btn bg-gray-700 text-white py-2 px-4 rounded-md shadow hover:bg-gray-600 transition duration-200"
+        onclick="window.print()">
+        Print Bill
+      </button>
+    </div>
+  </div>
 </body>
 </html>
