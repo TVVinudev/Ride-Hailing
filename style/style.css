@@ -54,3 +54,11 @@
     font-weight: 700;
     font-size: 40px;
 }
+
+.star {
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+.filled {
+    color: gold;
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rating and Comment Section</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .star {
+            cursor: pointer;
+            transition: color 0.2s ease-in-out;
+        }
+        .filled {
+            color: gold;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white shadow-lg rounded-lg p-6 max-w-lg w-full">
+        <h2 class="text-xl font-bold mb-4">Rate our application</h2>
+
+        <!-- Rating Section -->
+        <div class="flex items-center mb-4">
+            <span class="text-gray-600 mr-4">Rating:</span>
+            <div id="star-rating" class="flex">
+                <!-- SVG stars with classes and data-value attributes -->
+                <svg data-value="1" class="star w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 17.27l6.18 3.73-1.64-7.03L21 9.24l-7.19-.61L12 2 10.19 8.63 3 9.24l5.46 4.73-1.64 7.03L12 17.27z"/>
+                </svg>
+                <svg data-value="2" class="star w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 17.27l6.18 3.73-1.64-7.03L21 9.24l-7.19-.61L12 2 10.19 8.63 3 9.24l5.46 4.73-1.64 7.03L12 17.27z"/>
+                </svg>
+                <svg data-value="3" class="star w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 17.27l6.18 3.73-1.64-7.03L21 9.24l-7.19-.61L12 2 10.19 8.63 3 9.24l5.46 4.73-1.64 7.03L12 17.27z"/>
+                </svg>
+                <svg data-value="4" class="star w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 17.27l6.18 3.73-1.64-7.03L21 9.24l-7.19-.61L12 2 10.19 8.63 3 9.24l5.46 4.73-1.64 7.03L12 17.27z"/>
+                </svg>
+                <svg data-value="5" class="star w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 17.27l6.18 3.73-1.64-7.03L21 9.24l-7.19-.61L12 2 10.19 8.63 3 9.24l5.46 4.73-1.64 7.03L12 17.27z"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Comment Section -->
+        <div class="mb-4">
+            <label for="comment" class="block text-gray-600 mb-2">Your Comment:</label>
+            <textarea id="comment" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4"></textarea>
+        </div>
+
+        <button id="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:ring-4 focus:ring-blue-300">Submit</button>
+
+        <!-- Display the result -->
+        <div id="result" class="mt-4"></div>
+    </div>
+
+    <script>
+        const stars = document.querySelectorAll('.star');
+        const result = document.getElementById('result');
+        let ratingValue = 0;
+
+        // Hover functionality to preview rating without locking in
+        stars.forEach(star => {
+            star.addEventListener('mouseover', function () {
+                const hoverValue = this.getAttribute('data-value');
+                highlightStars(hoverValue);  // Temporarily highlight stars based on hover
+            });
+
+            star.addEventListener('mouseout', function () {
+                highlightStars(ratingValue); // Revert to locked rating when hover ends
+            });
+        });
+
+        // Add click event for stars to lock the selected rating
+        stars.forEach(star => {
+            star.addEventListener('click', function () {
+                ratingValue = this.getAttribute('data-value');  // Get the rating value from the clicked star
+                highlightStars(ratingValue);  // Lock the stars up to the clicked rating
+            });
+        });
+
+        // Function to highlight stars based on rating
+        function highlightStars(value) {
+            stars.forEach((star, index) => {
+                if (index < value) {
+                    star.classList.add('filled');
+                    star.classList.add('text-yellow-400');  // Use Tailwind's yellow color for filled stars
+                } else {
+                    star.classList.remove('filled');
+                    star.classList.remove('text-yellow-400'); // Remove filled class for unselected stars
+                }
+            });
+        }
+
+        // Handle submit button click
+        document.getElementById('submit').addEventListener('click', function () {
+            const comment = document.getElementById('comment').value;  // Get comment text
+            if (ratingValue === 0) {
+                result.innerHTML = `<p class="text-red-600">Please select a star rating before submitting.</p>`;
+            } else {
+                result.innerHTML = `<p class="text-gray-600">You rated <strong>${ratingValue} stars</strong> with the comment:</p>
+                                    <p class="italic">"${comment}"</p>`;
+            }
+        });
+    </script>
+</body>
+</html>

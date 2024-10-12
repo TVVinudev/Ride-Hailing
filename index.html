@@ -22,23 +22,62 @@
     </div> -->
 
     <header id="nav">
-        <nav class="bg-orange ">
+        <nav class="bg-orange border-gray-200 dark:bg-gray-900">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img src="./images/logo/Ride -white.png" class=" h-8" alt="" />
+                    <img src="./images/logo/Ride -white.png" class="h-8" alt="Flowbite Logo" />
                     <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Ride.</span>
                 </a>
-                <button data-collapse-toggle="navbar-solid-bg" type="button"
-                    class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                    aria-controls="navbar-solid-bg" aria-expanded="false">
-                    <span class="sr-only">Open main menu</span>
-                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 17 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M1 1h15M1 7h15M1 13h15" />
-                    </svg>
-                </button>
-                <div class="hidden w-full md:block md:w-auto" id="navbar-solid-bg">
+                <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                    <button type="button"
+                        class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                        id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
+                        data-dropdown-placement="bottom">
+                        <span class="sr-only">Open user menu</span>
+                        <img class="w-8 h-8 rounded-full" src="/images/avathar.jpg" alt="user photo">
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+                        id="user-dropdown">
+                        <div class="px-4 py-3">
+                            <span class="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
+                            <span
+                                class="block text-sm  text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
+                        </div>
+                        <ul class="py-2" aria-labelledby="user-menu-button">
+                            <li>
+                                <a href="#"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
+                                    Up</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
+                                    In</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
+                                    out</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <button data-collapse-toggle="navbar-user" type="button"
+                        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                        aria-controls="navbar-user" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 17 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M1 1h15M1 7h15M1 13h15" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
                     <ul
                         class="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-transparent dark:border-gray-700">
                         <li>
@@ -59,57 +98,141 @@
                             <a href="#"
                                 class="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-white dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
                         </li>
-                        <li>
-                            <a href="#"
-                                class="block py-2 px-3 md:py-1 md:px-3 md:p-0 text-gray-900 md:bg-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-white dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Login</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="block py-2 px-3 md:py-1 md:px-3 md:p-0 text-gray-900 md:bg-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-white dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Sign
-                                Up</a>
-                        </li>
-
 
                     </ul>
                 </div>
             </div>
         </nav>
+
     </header>
 
     <!-- ------------------------------- -->
 
-
-    <div class="w-auto h-auto md:w-100 md:h-[100vh] bg-white mx-4 my-4 md:mx-72 md:my-8 p-14 nav-shadow" id="home">
-        <div class="text-center">
+    <div class="w-auto h-auto md:w-100 md:h-[100vh] bg-white mx-4 my-4 md:mx-72 md:my-8 p-10 nav-shadow">
+        <div class="text-center ">
             <span class="text-xl text-dark bold">Are you Ready for a </span>
             <span class=" common-text-color ">Ride.?</span>
         </div>
-        <div class="flex flex-col space-y-4">
-
-            <div>
-                <label for="pickup" class="block text-sm font-medium text-gray-700">Pick-up Location:</label>
-                <input type="text" id="pickup"
-                    class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500"
-                    placeholder="Enter pick-up address">
-
+        <div class="w-full border border-gray-200 rounded-lg shadow ">
+            <div class="sm:hidden">
+                <label for="tabs" class="sr-only">Select tab</label>
+                <select id="tabs"
+                    class="bg-gray-50 border-0 border-b border-gray-200 text-gray-900 text-sm rounded-t-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="stats">Need a Ride.</option>
+                    <option value="about">On a Ride.</option>
+                </select>
             </div>
-            <div>
+            <ul class="hidden text-sm font-medium text-center text-white divide-x divide-gray-200 rounded-2xl sm:flex dark:divide-gray-600 rtl:divide-x-reverse"
+                id="fullWidthTab" role="tablist">
+                <li class="w-full">
+                    <button id="stats-tab" data-tabs-target="#stats" type="button" role="tab" aria-controls="stats"
+                        aria-selected="true"
+                        class="inline-block w-full p-4 rounded-ss-lg bg-yellow-500 focus:outline-none">Need a Ride.</button>
+                </li>
+                <li class="w-full">
+                    <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about"
+                        aria-selected="false"
+                        class="inline-block w-full p-4 bg-yellow-500 focus:outline-none ">On a Ride.</button>
+                </li>
+            </ul>
+            <div id="fullWidthTabContent" class="border-t border-gray-200 ">
+                <div class="hidden p-4 bg-white rounded-lg md:p-8 " id="stats" role="tabpanel"
+                    aria-labelledby="stats-tab">
+                    <div class="w-auto h-auto md:w-100 md:h-[100vh] bg-white mx-4 my-5" id="home">
+                        <div class="flex flex-col space-y-4">
 
-                <label for="dropoff" class="block text-sm font-medium text-gray-700">Drop-off Location:</label>
+                            <div>
+                                <label for="pickup" class="block text-sm font-medium text-gray-700">Pick-up
+                                    Location:</label>
+                                <input type="text" id="pickup"
+                                    class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500"
+                                    placeholder="Enter pick-up address">
 
-                <input type="text" id="dropoff"
-                    class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500"
-                    placeholder="Enter drop-off address">
-            </div>
+                            </div>
+                            <div>
 
-            <div>
-                <button type="button"
-                    class="inline-block rounded bg-yellow-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
-                    search cab
-                </button>
+                                <label for="dropoff" class="block text-sm font-medium text-gray-700">Drop-off
+                                    Location:</label>
+
+                                <input type="text" id="dropoff"
+                                    class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500"
+                                    placeholder="Enter drop-off address">
+                            </div>
+                            <div></div>
+                                <label for="tabs" class="block text-sm font-medium text-gray-700">No. of Passengers</label>
+                                <select
+                                    class="bg-gray-50 border-none shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 rounded-t-lg  block w-full p-2.5 ">
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                                    <option value="">3</option>
+                                    <option value="">4</option>
+                                    <option value="">5</option>
+
+                                </select>
+                            </div>
+
+                            <div>
+                                <button type="button"
+                                    class="inline-block rounded bg-yellow-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
+                                    <a href="./pages/users/TripBooking.html">search cab</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hidden p-4 bg-white rounded-lg md:p-8 " id="about" role="tabpanel"
+                    aria-labelledby="about-tab">
+                    <div class="flex flex-col space-y-4">
+
+                        <div>
+                            <label for="pickup" class="block text-sm font-medium text-gray-700">Starting location
+                                Location:</label>
+                            <input type="text" id="pickup"
+                                class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500"
+                                placeholder="Enter pick-up address">
+
+                        </div>
+                        <div class="flex space-x-3">
+                            <div>
+
+                                <label for="dropoff" class="block text-sm font-medium text-gray-700">End
+                                    Location:</label>
+
+                                <input type="text" id="dropoff"
+                                    class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500"
+                                    placeholder="Enter drop-off address">
+
+                            </div>
+                            <div>
+                                <label for="tabs" class="block text-sm font-medium text-gray-700">Availabe Seats</label>
+                                <select
+                                    class="bg-gray-50 border-none shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 rounded-t-lg  block w-full p-2.5 ">
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                                    <option value="">3</option>
+                                    <option value="">4</option>
+                                    <option value="">5</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="flex">
+                            <button type="button"
+                                class="inline-block rounded bg-yellow-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
+                                search cab
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+
 
     <!--------------------- banner - section ---------------------------------------------->
 
