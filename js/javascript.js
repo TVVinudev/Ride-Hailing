@@ -30,34 +30,9 @@ window.addEventListener('DOMContentLoaded',()=>{
 
 
 
-///change background
 
-// const backgroundImages = [
 
-//     "url('../images/bg1.jpg')", 
 
-//     "url('../images/bg2.jpg')", 
-
-//     "url('../images/bg3.jpg')"
-
-// ];
-
-// let currentImageIndex = 0;
-
-// function changeBackgroundImage() {
-
-//     const backgroundElement = document.getElementById("background-image");
-
-//     backgroundElement.style.backgroundImage = backgroundImages[currentImageIndex];
-
-//     currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
-
-// }
-
-// setInterval(() => {
-//     changeBackgroundImage();
-// }, 1000);
-// // Change image every 5 seconds
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -143,4 +118,5 @@ document.getElementById('submit').addEventListener('click', function () {
                             <p class="italic">"${comment}"</p>`;
     }
 });
+
 
