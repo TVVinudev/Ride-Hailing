@@ -11,6 +11,56 @@
     <link rel="stylesheet"
         href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
 
+
+    <script>
+        function addField() {
+
+            const routeArray = [];
+
+            const place = document.getElementById('Routes').value;
+            const container = document.getElementById('inputFields');
+
+            if (place.trim() !== '') {
+                routeArray.push(place);
+
+                const box = document.createElement('div');
+                box.style.display = 'flex'
+                box.style.width = 'auto'
+                box.style.margin = '5px';
+
+                const display = document.createElement('label');
+                display.textContent = place;
+                display.style.fontSize = '10px';
+                display.style.backgroundColor = '#ffa200';
+                display.style.padding = '10px';
+                display.style.width = 'auto'
+                display.ariaDisabled = true;
+                display.style.margin = '5px';
+
+                const button = document.createElement('button');
+                button.textContent = 'x';
+                button.style.padding = '10px';
+                button.style.width = 'auto';
+                button.onclick = () => {
+                    const index = routeArray.indexOf(place);
+                    if (index > -1) {
+                        routeArray.splice(index, 1);  // Remove the specific element
+                    }
+                    container.removeChild(box);
+                };
+
+                document.getElementById('Routes').value = '';
+
+                box.appendChild(display)
+                box.appendChild(button);
+                container.appendChild(box);
+
+            } else {
+                alert('enter place')
+            }
+        }
+    </script>
+
 </head>
 
 <body class="bg-orange">
@@ -41,8 +91,7 @@
                         id="user-dropdown">
                         <div class="px-4 py-3">
                             <span class="block text-sm text-gray-900 dark:text-white">Rithu</span>
-                            <span
-                                class="block text-sm  text-gray-500 truncate dark:text-gray-400">rithu@123</span>
+                            <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">rithu@123</span>
                         </div>
                         <ul class="py-2" aria-labelledby="user-menu-button">
                             <li>
@@ -65,8 +114,7 @@
                         class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                         aria-controls="navbar-user" aria-expanded="false">
                         <span class="sr-only">Open main menu</span>
-                        <svg class="w-5 h-5" aria-hidden="true" fill="none"
-                            viewBox="0 0 17 14">
+                        <svg class="w-5 h-5" aria-hidden="true" fill="none" viewBox="0 0 17 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M1 1h15M1 7h15M1 13h15" />
                         </svg>
@@ -195,6 +243,20 @@
                                 placeholder="Enter pick-up address">
 
                         </div>
+
+                        <div>
+                            <label for="pickup" class="block text-sm font-medium text-gray-700">Routes To:</label>
+                            <div class="flex space-x-3">
+                                <input type="text" id="Routes"
+                                    class="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500"
+                                    placeholder="Enter pick-up address">
+                                <button class="w-14 md:w-24 rounded-full text-white bg-yellow-500"
+                                    onclick="addField()">+</button>
+
+                            </div>
+                            <div id="inputFields" class="mt-4 flex"></div>
+                        </div>
+
                         <div class="flex space-x-3">
                             <div>
 
@@ -207,7 +269,8 @@
 
                             </div>
                             <div>
-                                <label for="tabs" class="block text-sm font-medium text-gray-700">Availabe Seats:</label>
+                                <label for="tabs" class="block text-sm font-medium text-gray-700">Availabe
+                                    Seats:</label>
                                 <select
                                     class="bg-gray-50 border-none shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 rounded-t-lg  block w-full p-2.5 ">
                                     <option value="">1</option>
@@ -224,7 +287,7 @@
                         <div class="flex">
                             <button type="button"
                                 class="inline-block rounded bg-yellow-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
-                             <a href="./pages/Rider/addTrip.html">Add Trip</a>   
+                                <a href="./pages/Rider/addTrip.html">Add Trip</a>
                             </button>
 
                         </div>
@@ -263,22 +326,23 @@
     <!-- ----------------------- footer--------------------------------- -->
 
 
-   
 
-<footer class="bg-white rounded-lg shadow ">
-    <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-      <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="" class="hover:underline">Ride.</a>. All Rights Reserved.
-    </span>
-    <ul class="flex flex-wrap items-center mt-3  text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
-        <li class="ml-3">
-            <a href="./pages/About.html" class="hover:underline me-4 md:me-6">About</a>
-        </li>
-        <li class="ml-3">
-            <a href="./pages/" class="hover:underline me-4 md:me-6">Contact</a>
-        </li>
-    </ul>
-    </div>
-</footer>
+
+    <footer class="bg-white rounded-lg shadow ">
+        <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+            <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href=""
+                    class="hover:underline">Ride.</a>. All Rights Reserved.
+            </span>
+            <ul class="flex flex-wrap items-center mt-3  text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
+                <li class="ml-3">
+                    <a href="./pages/About.html" class="hover:underline me-4 md:me-6">About</a>
+                </li>
+                <li class="ml-3">
+                    <a href="./pages/" class="hover:underline me-4 md:me-6">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </footer>
 
 
 
