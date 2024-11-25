@@ -19,15 +19,26 @@ userRoutes.get('/', (req, res) => {
 userRoutes.post('/signup', async (req, res) => {
 
     const body = req.body;
-    const { firstName, lastName, userName, password, contact, email, role } = body;
-    console.log(firstName, lastName, userName, password, contact, email, role);
+    const { firstName, lastName, userName, password, contact, email } = body;
+    console.log(firstName, lastName, userName, password, contact, email);
+
+
 
     const newPassword = await (bcrypt.hash(password, 10));
     console.log(newPassword);
 
 
     try {
+
+        const found = await User.findOne({ role: 'admin' });
+        let role = 'user';
+
+        if (!found) {
+            role = 'admin'
+        }
+
         const result = await User.findOne({ userName: userName });
+
         if (result) {
             res.status(404).json({ message: "user already exist" })
         } else {
@@ -139,7 +150,7 @@ userRoutes.get('/search/:search', async (req, res) => {
         if (result) {
             res.status(200).json({ data: result })
         } else {
-            res.status(404).json({message: "user not found"})
+            res.status(404).json({ message: "user not found" })
         }
 
     } catch (err) {
@@ -185,9 +196,9 @@ userRoutes.put('/update/:id', authenticate, async (req, res) => {
         );
 
         if (result.matchedCount === 0) {
-            return res.status(400).json({ message: 'Course could not be updated' });
+            return res.status(400).json({ message: ' could not be updated' });
         } else {
-            return res.status(200).json({ message: 'Course updated successfully', result });
+            return res.status(200).json({ message: ' updated successfully', result });
         }
 
     } catch (error) {

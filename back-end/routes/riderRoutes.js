@@ -1,5 +1,5 @@
-import { json, Router } from 'express';
-import dotenv from 'dotenv';
+import { Router } from 'express';
+
 import { Rider, User } from '../models/db.js';
 import { authenticate } from '../middleware/auth.js';
 
@@ -10,70 +10,105 @@ riderRoute.get('/', (req, res) => {
     res.send('hellow')
 })
 
+riderRoute.post('/addDetails', authenticate, async (req, res) => {
 
-riderRoute.post('/createRide', authenticate, async (req, res) => {
+
+    const body = req.body
+    const license = body.license;
+    const user = req.UserName;
+
+    console.log(user);
+
 
     try {
-        const body = req.body;
+        const result = await User.findOne({ userName: user })
 
-        const {
-            tripId,
-            date,
-            userName,
-            startingLocation,
-            endLocation,
-            routesTo,
-            availableSeats,
-            contact,
-            license,
-            vehicle,
-            insurance,
-            vehicleNumber,
-            ac
-        } = body;
+        if (result) {
+            const contact = result.contact;
 
-        console.log(req.UserRole);
+            const newData = new Rider({
+                userName: user,
+                license: license,
+                contact: contact,
+            });
 
-        if (req.UserRole) {
+            await newData.save();
 
-            const user = await User.findOne({ userName: userName });
-            console.log(user);
+            res.status(200).json({ message: "successfully added!" })
 
-            if (user) {
-
-                const newData = new Rider({
-                    tripId: tripId,
-                    date:date,
-                    userName: userName,
-                    startingLocation: startingLocation,
-                    endLocation: endLocation,
-                    routesTo: routesTo,
-                    availableSeats: availableSeats,
-                    contact: contact,
-                    license: license,
-                    vehicle: vehicle,
-                    insurance: insurance,
-                    vehicleNumber: vehicleNumber,
-                    ac: ac
-                });
-
-                console.log(newData)
-                await newData.save();
-                res.status(201).json({ message: "Ride registered" })
-
-            } else {
-
-                res.status(404).json({ message: "user not found" })
-
-            }
         } else {
-            console.log("need a user")
+            res.status(404).json({ message: "Data not found!" })
         }
     } catch (error) {
-        console.error(error)
-        res.status(500).json({ message: ":server error" });
+        console.error(error);
+
     }
-});
+})
+
+riderRoute.post('/verified/:id', authenticate, async (req, res) => {
+
+    const role = req.UserRole;
+    const user = req.params.id;
+
+    if (role === 'admin') {
+
+        const result = await Rider.updateOne(
+            { userName: user },
+            {
+                $set: {
+                    Status: 'verified'
+                }
+            }
+        );
+
+        if (result.matchedCount === 0) {
+            return res.status(400).json({ message: 'Course could not be updated' });
+
+        } else {
+
+            await User.updateOne(
+                { userName: user },
+                {
+                    $set: {
+                        role: 'rider'
+                    }
+                }
+
+            )
+            return res.status(200).json({ message: 'Course updated successfully', result });
+
+        }
+
+    }
+
+})
+
+riderRoute.post('/cancelled/:id', authenticate, async (req, res) => {
+
+    const role = req.UserRole;
+    const user = req.params.id;
+
+    if (role === 'admin') {
+
+        const result = await Rider.updateOne(
+            { userName: user },
+            {
+                $set: {
+                    Status: 'cancelled'
+                }
+            }
+        );
+
+        if (result.matchedCount === 0) {
+            return res.status(400).json({ message: 'Course could not be updated' });
+
+        } else {
+            return res.status(200).json({ message: 'Course updated successfully', result });
+        }
+
+    }
+
+})
 
 
 riderRoute.get('/viewAll', authenticate, async (req, res) => {
@@ -91,22 +126,18 @@ riderRoute.get('/viewAll', authenticate, async (req, res) => {
     }
 });
 
-riderRoute.get('/search/:search', authenticate, async (req, res) => {
+
+
+riderRoute.get('/search/:search', async (req, res) => {
 
     try {
         const search = req.params.search;
 
-        if (req.UserRole === 'admin') {
-
-
-            const result = await Rider.find({ userName: search })
-            if (result) {
-                res.status(200).json({ data: result })
-            } else {
-                res.status(404).json({ message: "user not found" })
-            }
+        const result = await Rider.find({ userName: search });
+        if (result) {
+            res.status(200).json({ data: result })
         } else {
-            res.status(404).json({ message: "you are not admin" })
+            res.status(404).json({ message: "user not found" })
         }
 
     } catch (err) {
@@ -115,12 +146,38 @@ riderRoute.get('/search/:search', authenticate, async (req, res) => {
     }
 });
 
+riderRoute.patch('/update/:id', authenticate, async (req, res) => {
+    const id = req.params.id;
+    const body = req.body;
+    const license = body
+    if (req.UserName !== 'rider') return res.json({ message: "no permision to change the data" });
+
+    const result = await Rider.updateOne(
+        { userName: id },
+        $set[
+        {
+            license: license
+        }
+        ]
+    );
+
+    if (result.matchedCount == 0) {
+        res.status(404).json({ message: "not updated", result })
+    } else {
+        res.status(200).json({ message: " update successfully", result })
+    }
+
+})
+
+
+
+
 riderRoute.delete('/delete/:id', authenticate, async (req, res) => {
     try {
         const cid = req.params.id;
 
-        if (req.UserRole === 'admin') {
-            const result = await Rider.findOne({ tripId: cid })
+        if (req.UserRole === 'admin' || req.UserName === 'rider') {
+            const result = await Rider.findOne({ userName: cid })
             if (result) {
                 const result = await Rider.deleteOne({ tripId: cid });
                 console.log(`${result.deletedCount} document(s) was/were deleted.`);
@@ -136,9 +193,6 @@ riderRoute.delete('/delete/:id', authenticate, async (req, res) => {
         console.log(error)
     }
 })
-
-
-
 
 
 export { riderRoute }
