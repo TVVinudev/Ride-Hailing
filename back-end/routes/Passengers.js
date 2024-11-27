@@ -6,34 +6,28 @@ import { Passenger } from "../models/db.js";
 const passengerRoutes = Router();
 
 passengerRoutes.post('/addDetails', authenticate, async (req, res) => {
+    const { pickup, dropoff, date, count, names } = req.body;
+    const user = req.UserName;
 
-    const body = req.body
-    const user = req.UserName
-    const { pickup, dropping, date, seats, passengers } = body;
+    try {
+        const newData = new Passenger({
+            userName: user,
+            pickupLocation: pickup,
+            dropLocation: dropoff,
+            bookedSeats: count,
+            date,
+            passengersName: names,
+            // tripId: req.body.tripId || new mongoose.Types.ObjectId() // Ensure tripId is unique
+        });
 
-    if (user) {
-        try {
-            const newData = new Passenger({
-                userName: user,
-                pickupLocation: pickup,
-                dropLocation: dropping,
-                bookedSeats: seats,
-                date: date,
-                passengersName: passengers
-            });
-
-            await newData.save();
-            console.log(newData);
-            res.status(200).json({ message: "Add Passengers Data!" })
-
-        } catch (error) {
-            console.log(error)
-        }
-    } else {
-        res.status(404).json({ message: "you need to login for this service." })
+        await newData.save();
+        res.status(200).json({ message: "Passenger data added successfully!" });
+    } catch (error) {
+        console.error('Error saving Passenger data:', error);
+        res.status(500).json({ error: error.message });
     }
-
 });
+
 
 passengerRoutes.get('/viewAll', authenticate, async (req, res) => {
 
@@ -52,7 +46,7 @@ passengerRoutes.get('/viewAll', authenticate, async (req, res) => {
 
 });
 
-passengerRoutes.get('/search/:username', authenticate,async(req, res) => {
+passengerRoutes.get('/search/:username', authenticate, async (req, res) => {
 
     try {
 

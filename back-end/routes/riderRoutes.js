@@ -11,39 +11,37 @@ riderRoute.get('/', (req, res) => {
 })
 
 riderRoute.post('/addDetails', authenticate, async (req, res) => {
-
-
-    const body = req.body
-    const license = body.license;
+    const { license } = req.body;
     const user = req.UserName;
 
-    console.log(user);
-
+    if (!license) {
+        return res.status(400).json({ message: "License is required!" });
+    }
 
     try {
-        const result = await User.findOne({ userName: user })
+        const result = await User.findOne({ userName: user });
 
-        if (result) {
-            const contact = result.contact;
-
-            const newData = new Rider({
-                userName: user,
-                license: license,
-                contact: contact,
-            });
-
-            await newData.save();
-
-            res.status(200).json({ message: "successfully added!" })
-
-        } else {
-            res.status(404).json({ message: "Data not found!" })
+        if (!result) {
+            return res.status(404).json({ message: "User not found!" });
         }
-    } catch (error) {
-        console.error(error);
 
+        const { contact } = result.contact;
+
+        const newData = new Rider({
+            userName: user,
+            license,
+            contact,
+        });
+
+        await newData.save();
+        return res.status(200).json({ message: "Details successfully added!" });
+
+    } catch (error) {
+        console.error("Error adding rider details:", error);
+        return res.status(500).json({ message: "An internal server error occurred." });
     }
-})
+});
+
 
 riderRoute.post('/verified/:id', authenticate, async (req, res) => {
 

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { authenticate } from "../middleware/auth.js";
-import { Payment, Trips } from "../models/db.js";
+import { Payment, TripInitial } from "../models/db.js";
 
 
 const paymentRoute = Router();
@@ -8,10 +8,15 @@ const paymentRoute = Router();
 paymentRoute.post('/addData', authenticate, async (req, res) => {
 
     const body = req.body;
-    const { tripId, pickup, drop, distance, amount } = body;
+    const { tripId, pickupLocation, dropLocation, distance, amount } = body;
+    try {
+        const result = await TripInitial.findOne({ tripId: tripId });
+        let riderName = result.riderName
+        let passengerName = result.bookUser
+    } catch (error) {
 
-    const result = await Trips.findOne({ tripId });
-    let riderName = result.riderName
+    }
+
 
     if (req.UserRole === 'rider') {
 
@@ -20,9 +25,10 @@ paymentRoute.post('/addData', authenticate, async (req, res) => {
             const newData = await Payment({
                 tripId: tripId,
                 riderName: riderName,
+                bookUser: passengerName,
                 distance: distance,
-                pickupLocation: pickup,
-                dropLocation: drop,
+                pickupLocation: pickupLocation,
+                dropLocation: dropLocation,
                 amount: amount
             });
 

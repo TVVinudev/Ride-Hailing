@@ -139,6 +139,15 @@ userRoutes.get('/viewUser', authenticate, (req, res) => {
     }
 })
 
+userRoutes.get('/userName', authenticate, (req, res) => {
+    try {
+        const user = req.UserName;
+        console.log(user)
+        res.json({ user });
+    } catch (error) {
+        res.status(500).json({ message: "server error" })
+    }
+})
 
 userRoutes.get('/search/:search', async (req, res) => {
 

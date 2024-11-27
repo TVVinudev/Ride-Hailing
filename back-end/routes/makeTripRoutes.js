@@ -8,8 +8,11 @@ const MakeTrip = Router();
 MakeTrip.post('/addTrip', authenticate, async (req, res) => {
 
     const body = req.body;
-    const { tripId, startingLocation, endLocation, routes, distance, date, time, vehicle, registrationNumber, availableSeats } = body;
+    const { startingLocation, endLocation, routes, distance, date, time, vehicle, registrationNumber, availableSeats } = body;
     console.log(startingLocation);
+
+    const now = new Date();
+    const tripId = 'TRIP-' + now.getFullYear() + now.getMonth() + now.getDate() + now.getHours() + now.getMinutes() + now.getMilliseconds()
 
 
     try {
@@ -65,6 +68,7 @@ MakeTrip.get('/getAll', authenticate, async (req, res) => {
 
 })
 
+
 MakeTrip.delete('/deleteTrip/:id', authenticate, async (req, res) => {
 
     const id = req.params.id
@@ -116,7 +120,7 @@ MakeTrip.get('/filter', authenticate, async (req, res) => {
 
 
         if (filteredTrips.length > 0) {
-            res.status(200).send(filteredTrips);
+            res.status(200).json(filteredTrips);
         } else {
             res.status(200).json({ message: "No data found!" });
         }

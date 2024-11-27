@@ -68,9 +68,10 @@ const passengerSchema = new Schema({
 const tripInitial = new Schema({
     tripId: { type: String, ref: 'Trips' },
     riderName: { type: String, ref: 'Trips' },
+    bookUser: { type: String, ref: 'Passenger' },
     startingLocation: { type: String, ref: 'Trips' },
     endingLocation: { type: String, ref: 'Trips' },
-    passengersName: { type: String, ref: 'Passenger' },
+    passengersName: { type: [String], ref: 'Passenger' },
     pickupLocation: { type: String, ref: 'Passenger' },
     dropLocation: { type: String, ref: 'Passenger' },
     date: { type: String, ref: 'Passenger' },
@@ -82,6 +83,7 @@ const tripInitial = new Schema({
 const paymentSchema = new Schema({
     tripId: { type: String, required: true, ref: 'TripInitial' },
     riderName: { type: String, ref: 'Trips' },
+    bookUser: { type: String, ref: 'Passenger' },
     distance: { type: Number, required: true },
     pickupLocation: { type: String, ref: 'TripInitial' },
     dropLocation: { type: String, ref: 'TripInitial' },

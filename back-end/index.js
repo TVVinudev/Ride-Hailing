@@ -1,5 +1,8 @@
 import express, { json } from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
+
+
 import { userRoutes } from './routes/userRoutes.js';
 import { riderRoute } from './routes/riderRoutes.js';
 import { MakeTrip } from './routes/makeTripRoutes.js';
@@ -9,12 +12,17 @@ import { paymentRoute } from './routes/payment.js';
 
 
 
+
 dotenv.config();
-
-
-
 const app = express();
 
+app.use(
+    cors({
+      origin: "http://localhost:8040",
+      credentials: true
+    })
+  );
+  
 app.use(json());
 
 app.use('/',userRoutes);
