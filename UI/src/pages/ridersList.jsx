@@ -63,22 +63,23 @@ const RidersList = () => {
             const resp = await fetch('/api/tripInitial/addData', {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(newData)
+                body: JSON.stringify(newData),
             });
 
             if (resp.ok) {
-                alert('booking Successfully!')
+                alert('Booking successful!');
                 setTimeout(() => {
                     navigate('/tripUpdations');
                 }, 1000);
             } else {
-                alert('Server Error')
+                // Parse the response to get the error message
+                const errorData = await resp.json();
+                alert(errorData.message || 'Something went wrong!');
             }
         } catch (error) {
-            alert(error)
+            alert(`Error: ${error.message || error}`);
         }
-
-    };
+    }
 
     return (
         <div className="p-8 bg-gray-100 min-h-screen">

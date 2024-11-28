@@ -8,8 +8,16 @@ const MakeTrip = Router();
 MakeTrip.post('/addTrip', authenticate, async (req, res) => {
 
     const body = req.body;
-    const { startingLocation, endLocation, routes, distance, date, time, vehicle, registrationNumber, availableSeats } = body;
-    console.log(startingLocation);
+    const { startLocation,
+        routes,
+        endLocation,
+        seats,
+        dropoff,
+        time,
+        vehicleModel,
+        registrationNumber,
+        distance } = body;
+    console.log(startLocation);
 
     const now = new Date();
     const tripId = 'TRIP-' + now.getFullYear() + now.getMonth() + now.getDate() + now.getHours() + now.getMinutes() + now.getMilliseconds()
@@ -23,15 +31,15 @@ MakeTrip.post('/addTrip', authenticate, async (req, res) => {
             const newData = new Trips({
                 tripId: tripId,
                 userName: user,
-                startingLocation: startingLocation,
+                startingLocation: startLocation,
                 endingLocation: endLocation,
                 tripRoutes: routes,
                 distance: distance,
-                scheduledDate: date,
+                scheduledDate: dropoff,
                 scheduledTime: time,
-                vehicle: vehicle,
+                vehicle: ve,
                 vehicleRegistrationNumber: registrationNumber,
-                availableSeats: availableSeats
+                availableSeats: seats
             });
 
             await newData.save();
@@ -51,10 +59,31 @@ MakeTrip.post('/addTrip', authenticate, async (req, res) => {
 
 MakeTrip.get('/getAll', authenticate, async (req, res) => {
 
-    if (req.UserRole === 'admin') {
+    if (req.UserRole === 'admin' || req.UserRole === 'rider') {
         try {
             const data = await Trips.find()
             res.send(Array.from(data.entries()));
+            console.log(data);
+
+        } catch (error) {
+            console.error(error);
+
+        }
+    } else {
+        res.status(404).json({ message: "Not allowed to view!" })
+    }
+
+
+})
+
+MakeTrip.get('/getUser/:id', authenticate, async (req, res) => {
+
+    const id = req.params.id
+
+    if (req.UserRole === 'admin' || req.UserRole === 'rider') {
+        try {
+            const data = await Trips.findOne({ tripId: id })
+            res.json(data);
             console.log(data);
 
         } catch (error) {

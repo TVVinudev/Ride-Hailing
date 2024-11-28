@@ -67,7 +67,15 @@ const passengerSchema = new Schema({
 
 const tripInitial = new Schema({
     tripId: { type: String, ref: 'Trips' },
+    rideId: { type: String, required: true, unique: true },
     riderName: { type: String, ref: 'Trips' },
+    bookedUserContact : {
+        type: String,
+        validate: {
+            validator: function (v) { return /\d{10}/.test(v); },
+            message: props => `${props.value} is not a valid contact number!`
+        }
+    },
     bookUser: { type: String, ref: 'Passenger' },
     startingLocation: { type: String, ref: 'Trips' },
     endingLocation: { type: String, ref: 'Trips' },
@@ -82,8 +90,16 @@ const tripInitial = new Schema({
 // --- Payment Schema ---
 const paymentSchema = new Schema({
     tripId: { type: String, required: true, ref: 'TripInitial' },
+    rideId: { type: String, required: true, unique: true },
     riderName: { type: String, ref: 'Trips' },
     bookUser: { type: String, ref: 'Passenger' },
+    bookedUserContact : {
+        type: String,
+        validate: {
+            validator: function (v) { return /\d{10}/.test(v); },
+            message: props => `${props.value} is not a valid contact number!`
+        }
+    },
     distance: { type: Number, required: true },
     pickupLocation: { type: String, ref: 'TripInitial' },
     dropLocation: { type: String, ref: 'TripInitial' },

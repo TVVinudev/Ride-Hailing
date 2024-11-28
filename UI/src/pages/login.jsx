@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import bg from '../assets/images/daniel-early-xAqmWdhZJJA-unsplash.jpg';
 import { Link, useNavigate } from 'react-router-dom';
+import { logUserRole } from '../utils/getUserRole';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -8,6 +9,8 @@ const Login = () => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [userRole, setUserRole] = useState('');
+
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -29,7 +32,31 @@ const Login = () => {
 
             if (resp.ok) {
                 alert('Login Successful!');
-                navigate('/'); // Update this to your desired path
+
+                try {
+                    const resp = await fetch(`/api/search/${userName}`, {
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json' },
+                    });
+
+                    if (!resp.ok) {
+                        throw new Error(`Error: ${resp.status} ${resp.statusText}`);
+                    }
+
+                    const data = await resp.json();
+                    if(data.data.role ==='admin'){
+                        navigate('/adminDashBoard')
+                    }else{
+                        navigate('/')
+                    }
+                    
+                } catch (error) {
+                    console.error('Failed to fetch user role:', error);
+                    throw error;
+                }
+
+                // navigate('/');
+                // Update this to your desired path
             } else {
                 alert('Invalid username or password!');
             }

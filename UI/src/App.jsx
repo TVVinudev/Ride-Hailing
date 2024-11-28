@@ -10,6 +10,11 @@ import Signup from './pages/signup';
 import RidersList from './pages/ridersList';
 import AdminLayout from './layout/adminLayout';
 import TripUpdations from './pages/tripUpdations';
+import DisplayPayment from './pages/displayPayment';
+import RiderUpdation from './pages/riderUpdation';
+import AddPayment from './pages/addPayment';
+import Dashboard from './pages/dashboard';
+import RiderDetails from './pages/rider';
 
 const App = () => {
   return (
@@ -26,15 +31,15 @@ const App = () => {
           <Route path='/contact' element={<Contact />} />
           <Route path='/ridersList' element={<RidersList />} />
           <Route path='/tripUpdations' element={<TripUpdations />} />
+          <Route path='/displayPayment' element={<DisplayPayment />} />
+          <Route path='/riderUpdation' element={<RiderUpdation />} />
+          <Route path='/addPayment' element={<AddPayment />} />
         </Route>
 
-
-        <Route element={<AdminLayout />} >
-          <Route element={<MainLayout />}>
-
-          </Route>
+        <Route element={<AdminLayout />}>
+          <Route path='/adminDashBoard' element={<Dashboard />} />
+          <Route path='/riders' element={<RiderDetails />} />
         </Route>
-
 
       </Routes>
     </Router >

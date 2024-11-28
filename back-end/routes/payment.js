@@ -8,22 +8,24 @@ const paymentRoute = Router();
 paymentRoute.post('/addData', authenticate, async (req, res) => {
 
     const body = req.body;
-    const { tripId, pickupLocation, dropLocation, distance, amount } = body;
-    try {
-        const result = await TripInitial.findOne({ tripId: tripId });
-        let riderName = result.riderName
-        let passengerName = result.bookUser
-    } catch (error) {
+    const { rideId, pickupLocation, dropLocation, distance, amount } = body;
 
-    }
+    console.log(rideId, pickupLocation, dropLocation, distance, amount);
 
 
     if (req.UserRole === 'rider') {
 
         try {
+            const result = await TripInitial.findOne({ rideId: rideId });
+            console.log(result);
+
+            let riderName = result.riderName
+            let passengerName = result.bookUser
+            let tripId = result.tripId
 
             const newData = await Payment({
                 tripId: tripId,
+                rideId: rideId,
                 riderName: riderName,
                 bookUser: passengerName,
                 distance: distance,
@@ -47,25 +49,32 @@ paymentRoute.patch('/updateStatus/:id', async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 
+    const payment = await Payment.findOne({ rideId: id });
+    if (!payment) {
+        return res.status(404).json({ message: 'Invalid Id' });
+    }
+
     const validStatuses = ['pending', 'paid', 'failed'];
     if (!validStatuses.includes(status)) {
         return res.status(400).json({ message: 'Invalid status value' });
     }
 
     try {
-
-        const result = await Payment.updateOne(
-            { tripId: id },
-            { $set: { status } }
+        
+        const updateResult = await Payment.updateOne(
+            { rideId: id }, 
+            { $set: { paymentStatus: status } }
         );
 
-        if (result.matchedCount === 0) {
-            return res.status(404).json({ message: 'Trip not found' });
+        
+        if (updateResult.matchedCount === 0) {
+            return res.status(404).json({ message: 'Payment not found' });
         }
 
+      
         res.status(200).json({
             message: 'Status updated successfully',
-            updatedFields: { status },
+            updatedStatus: status, 
             tripId: id,
         });
 
@@ -75,6 +84,25 @@ paymentRoute.patch('/updateStatus/:id', async (req, res) => {
     }
 });
 
+
+
+paymentRoute.get('/display/:id', async (req, res) => {
+
+    try {
+        const search = req.params.id;
+
+        const result = await Payment.find({ rideId: search });
+        if (result) {
+            res.json(result)
+        } else {
+            res.status(404).json({ message: "user not found" })
+        }
+
+    } catch (err) {
+        res.status(500).json({ message: "server error", data: err })
+
+    }
+});
 
 paymentRoute.get('/search/:search', async (req, res) => {
 
