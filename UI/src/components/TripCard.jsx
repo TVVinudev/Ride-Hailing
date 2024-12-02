@@ -25,10 +25,14 @@ const TripCard = ({ trip, handleStatus, isActive }) => {
             </div>
           )}
           {status === 'accept' && (
-            <div className="flex space-x-3 mt-2">
-              <button className="bg-green-500 text-white px-6 py-2 rounded" onClick={() => handleStatus('waiting', rideId)}>Ready To</button>
-              <button className="bg-red-500 text-white px-6 py-2 rounded" onClick={() => handleStatus('cancelled', rideId)}>Cancel</button>
+            <div>
+              <p>Call {bookUser} for the Conformation!</p>
+              <div className="flex space-x-3 mt-2">
+                <button className="bg-green-500 text-white px-6 py-2 rounded" onClick={() => handleStatus('waiting', rideId)}>Ready To</button>
+                <button className="bg-red-500 text-white px-6 py-2 rounded" onClick={() => handleStatus('cancelled', rideId)}>Cancel</button>
+              </div>
             </div>
+
           )}
           {status === 'waiting' && (
             <div className="flex space-x-3 mt-2">

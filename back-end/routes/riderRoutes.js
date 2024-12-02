@@ -43,7 +43,7 @@ riderRoute.post('/addDetails', authenticate, async (req, res) => {
 });
 
 
-riderRoute.post('/verified/:id', authenticate, async (req, res) => {
+riderRoute.get('/verified/:id', authenticate, async (req, res) => {
 
     const role = req.UserRole;
     const user = req.params.id;
@@ -81,7 +81,7 @@ riderRoute.post('/verified/:id', authenticate, async (req, res) => {
 
 })
 
-riderRoute.post('/cancelled/:id', authenticate, async (req, res) => {
+riderRoute.get('/cancelled/:id', authenticate, async (req, res) => {
 
     const role = req.UserRole;
     const user = req.params.id;

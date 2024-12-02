@@ -62,8 +62,25 @@ const TripUpdations = () => {
         navigate('/displayPayment', { state: { tripId } });
     };
 
-    const handleCancelling = (tripId) => {
-        alert(`Ride with Trip ID ${tripId} is being cancelled. Add your logic here.`);
+    const handleCancelling = async (tripId, status) => {
+        try {
+            const response = await fetch(`/api/tripInitial/updateStatus/${tripId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status }),
+            });
+
+            if (response.ok) {
+                alert(`Trip status successfully updated to '${status}'.`);
+                setTripData(tripData.map(trip => trip.rideId === tripId ? { ...trip, status } : trip));
+            } else {
+                const errorData = await response.json();
+                alert(`Error: ${errorData.message || 'Failed to update trip status.'}`);
+            }
+        } catch (error) {
+            console.error('Error updating status:', error);
+            alert('An unexpected error occurred while updating the trip status.');
+        }
     };
 
     const renderTrips = (trips) => (
@@ -79,14 +96,14 @@ const TripUpdations = () => {
                             <p className="text-sm text-gray-600"><strong>Pickup Location:</strong> {element.pickupLocation}</p>
                             <p className="text-sm text-gray-600"><strong>Drop Location:</strong> {element.dropLocation}</p>
                             <p className={`text-sm font-semibold py-1 px-2 rounded-lg inline-block ${getStatusClass(element.status)}`}>
-                                {element.status == 'dropped' ? 'completed' : element.status}
+                                {element.status === 'dropped' ? 'completed' : element.status}
                             </p>
                         </div>
                         {activeTab === 'booked' && (
                             <>
                                 {element.status === 'request' && (
                                     <button
-                                        onClick={() => handleCancelling(element.tripId)}
+                                        onClick={() => handleCancelling(element.rideId, 'cancelled')}
                                         className="bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600 transition">
                                         Cancel Ride
                                     </button>
@@ -104,9 +121,8 @@ const TripUpdations = () => {
                                 )}
                             </>
                         )}
-
                         {activeTab === 'completed' && (
-                            <p className="text-gray-600 italic">Trip is  {element.status == 'dropped' ? 'completed' : element.status}.</p>
+                            <p className="text-gray-600 italic">Trip is {element.status === 'dropped' ? 'completed' : element.status}.</p>
                         )}
                     </div>
                 ))
@@ -120,7 +136,7 @@ const TripUpdations = () => {
         <div className="p-8 bg-gray-100 min-h-screen">
             <h1 className="text-2xl font-bold mb-6">Trip Updations</h1>
 
-            {/* Tab Buttons */}
+           
             <div className="flex space-x-4 mb-6">
                 <button
                     onClick={() => setActiveTab('booked')}
@@ -136,7 +152,7 @@ const TripUpdations = () => {
                 </button>
             </div>
 
-            {/* Conditional Rendering Based on Active Tab */}
+           
             {activeTab === 'booked' ? renderTrips(bookedTrips) : renderTrips(completedTrips)}
         </div>
     );

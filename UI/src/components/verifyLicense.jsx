@@ -23,6 +23,7 @@ const VerifyLicense = () => {
 
     const handleVerification = async (e) => {
         e.preventDefault();
+      
         const newData = {
             license
         }
@@ -66,8 +67,8 @@ const VerifyLicense = () => {
                 console.log(currentStatus);
                 
 
-                setStatus(currentStatus); // Store the fetched status
-                setError(null);  // Clear any previous errors
+                setStatus(currentStatus); 
+                setError(null);  
             } catch (err) {
                 console.error('Failed to fetch user validation status:', err);
                 setError('Failed to fetch data. Please try again later.');

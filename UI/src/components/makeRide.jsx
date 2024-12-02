@@ -65,7 +65,7 @@ const MakeRide = () => {
                 setRegistrationNumber('');
                 setDistance('');
 
-                navigate('/riderUpdation')
+                navigate('/')
 
 
             } else {
@@ -83,7 +83,7 @@ const MakeRide = () => {
     return (
         <div className="p-4 bg-white rounded-lg md:p-8">
             <div className="flex flex-col space-y-4">
-                {/* Starting Location */}
+               
                 <div>
                     <label htmlFor="startLocation" className="block text-sm font-medium text-gray-700">
                         Starting Location:
@@ -98,7 +98,7 @@ const MakeRide = () => {
                     />
                 </div>
 
-                {/* Routes Section */}
+          
                 <div>
                     <label htmlFor="routes" className="block text-sm font-medium text-gray-700">
                         Routes To:
@@ -142,9 +142,9 @@ const MakeRide = () => {
                     </div>
                 </div>
 
-                {/* Other Input Fields */}
+             
                 <div className="flex space-x-2 w-full justify-between">
-                    {/* End Location */}
+                   
                     <div>
                         <label htmlFor="endLocation" className="block text-sm font-medium text-gray-700">
                             End Location:
@@ -159,7 +159,7 @@ const MakeRide = () => {
                         />
                     </div>
 
-                    {/* Seats */}
+                  
                     <div>
                         <label htmlFor="seats" className="block text-sm font-medium text-gray-700">
                             Available Seats:
@@ -178,7 +178,7 @@ const MakeRide = () => {
                         </select>
                     </div>
 
-                    {/* Dropoff Date */}
+             
                     <div>
                         <label htmlFor="dropoff" className="block text-sm font-medium text-gray-700">
                             Date:
@@ -192,7 +192,7 @@ const MakeRide = () => {
                         />
                     </div>
 
-                    {/* Time */}
+                 
                     <div>
                         <label htmlFor="time" className="block text-sm font-medium text-gray-700">
                             Time:
@@ -248,7 +248,6 @@ const MakeRide = () => {
                     </div>
                 </div>
 
-                {/* Submit Button */}
                 <div>
                     <button
                         type="button"

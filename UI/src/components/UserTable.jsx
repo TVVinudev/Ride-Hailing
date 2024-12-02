@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const UsersTable = () => {
+const UsersTable = ({ dashboard }) => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
@@ -12,9 +12,14 @@ const UsersTable = () => {
 
                 if (resp.ok) {
                     const data = await resp.json();
-                    // Assuming `data.data` is the array of users
                     const sortedUsers = data.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-                    setUsers(sortedUsers.slice(0, 5)); // Get the last 5 users
+
+                    // Conditional logic based on dashboard prop
+                    if (dashboard === true) {
+                        setUsers(sortedUsers.slice(0, 3)); // Show only the latest 3 users for the dashboard
+                    } else {
+                        setUsers(sortedUsers); // Show all users
+                    }
                 } else {
                     alert('Error fetching users. Check your backend.');
                 }
@@ -25,12 +30,35 @@ const UsersTable = () => {
         };
 
         fetchData();
-    }, []);
+    }, [dashboard]); // Dependency array includes `dashboard` to re-fetch if it changes
+
+    const handleDeleteUser = async (userName) => {
+        try {
+            const resp = await fetch(`/api/deleteUser/${userName}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+            });
+
+            if (resp.ok) {
+                alert('User deleted successfully.');
+                setUsers(users.filter(user => user.userName !== userName));
+            } else {
+                alert('Error deleting user.');
+            }
+        } catch (error) {
+            console.error('Error deleting user:', error);
+            alert('An error occurred.');
+        }
+    };
 
     return (
         <div>
             <div className="py-4">
-                <span className="text-md font-semibold text-gray-400">Latest Users</span>
+                <span className="text-xl font-semibold text-gray-400">
+                    
+                   {dashboard===true?'Latest Users':'User Details'} 
+                    
+                    </span>
             </div>
 
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -58,7 +86,12 @@ const UsersTable = () => {
                                     <td className="px-6 py-4">{user.role === 'admin' ? <p className='text-green-400'>ADMIN</p> : user.role}</td>
                                     <td className="px-6 py-4 text-right">
                                         {user.role !== 'admin' && (
-                                            <button className="font-medium text-red-600 hover:underline">Delete</button>
+                                            <button 
+                                                className="font-medium text-red-600 hover:underline" 
+                                                onClick={() => handleDeleteUser(user.userName)}
+                                            >
+                                                Delete
+                                            </button>
                                         )}
                                     </td>
                                 </tr>

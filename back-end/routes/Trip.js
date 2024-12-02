@@ -209,6 +209,30 @@ tripRoutes.get('/getByRideID/:id', authenticate, async (req, res) => {
     }
 })
 
+
+tripRoutes.delete('/deleteUser/:id', authenticate, async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        if (req.UserRole === 'admin') {
+            const result = await TripInitial.findOne({ rideId: id })
+            if (result) {
+                const result = await TripInitial.deleteOne({ rideId: id });
+                console.log(`${result.deletedCount} document(s) was/were deleted.`);
+                res.status(200).json({ message: "Delete Successfully" })
+            } else {
+                res.status(404).json({ message: "User not found" })
+            }
+        } else {
+            res.status(404).json({ message: 'you are not admin' })
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+
 tripRoutes.get('/viewAll', authenticate, async (req, res) => {
     try {
 

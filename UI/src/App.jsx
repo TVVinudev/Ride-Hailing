@@ -15,6 +15,9 @@ import RiderUpdation from './pages/riderUpdation';
 import AddPayment from './pages/addPayment';
 import Dashboard from './pages/dashboard';
 import RiderDetails from './pages/rider';
+import Trips from './pages/trips';
+import User from './pages/User';
+import Payment from './pages/Payment';
 
 const App = () => {
   return (
@@ -39,6 +42,9 @@ const App = () => {
         <Route element={<AdminLayout />}>
           <Route path='/adminDashBoard' element={<Dashboard />} />
           <Route path='/riders' element={<RiderDetails />} />
+          <Route path='/trips' element={<Trips />} />
+          <Route path='/users' element={<User />} />
+          <Route path='/payments' element={<Payment />} />
         </Route>
 
       </Routes>

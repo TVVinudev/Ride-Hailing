@@ -3,11 +3,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const AdminNavbar = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const location = useLocation(); // Hook to get the current location
+    const location = useLocation(); 
     const navigate = useNavigate()
     const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
-    // Function to check if a link is active
     const isActive = (path) => location.pathname === path;
 
     const handleLogout = async () => {
@@ -20,7 +19,7 @@ const AdminNavbar = () => {
 
     return (
         <div>
-            {/* Toggle Button */}
+          
             <button
                 onClick={toggleSidebar}
                 className="sm:hidden p-2 mt-2 ms-3 text-gray-500 rounded-md focus:outline-none"
@@ -37,7 +36,7 @@ const AdminNavbar = () => {
                 </svg>
             </button>
 
-            {/* Sidebar */}
+         
             <aside
                 className={`fixed top-0 left-0 w-64 h-full bg-gray-800 text-white transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
                     } sm:translate-x-0`}
@@ -78,8 +77,8 @@ const AdminNavbar = () => {
                         </li>
                         <li>
                             <Link
-                                to="/payment"
-                                className={`flex items-center p-2 rounded-md ${isActive('/payment') ? 'bg-yellow-500' : 'text-white hover:bg-yellow-500'}`}
+                                to="/payments"
+                                className={`flex items-center p-2 rounded-md ${isActive('/payments') ? 'bg-yellow-500' : 'text-white hover:bg-yellow-500'}`}
                             >
                                 <span>Payment</span>
                             </Link>
@@ -96,7 +95,7 @@ const AdminNavbar = () => {
                 </div>
             </aside>
 
-            {/* Content */}
+            
             <div className="ml-64 p-6">
                 <h1 className="text-2xl font-semibold">Admin Dashboard</h1>
             </div>

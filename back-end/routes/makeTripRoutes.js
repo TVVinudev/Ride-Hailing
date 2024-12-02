@@ -37,7 +37,7 @@ MakeTrip.post('/addTrip', authenticate, async (req, res) => {
                 distance: distance,
                 scheduledDate: dropoff,
                 scheduledTime: time,
-                vehicle: ve,
+                vehicle: vehicleModel,
                 vehicleRegistrationNumber: registrationNumber,
                 availableSeats: seats
             });

@@ -26,24 +26,31 @@ const RiderRequests = () => {
         fetchData();
     }, []);
 
-    const handleAccept = (id) => {
-        setData((prevData) =>
-            prevData.map((data) =>
-                data.id === id ? { ...data, Status: 'verified' } : data
-            )
-        );
+    const handleAccept = async (id) => {
+
+        const resp = await fetch(`/api/rider/verified/${id}`, {
+            method: "GET",
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (resp.ok) {
+            alert('Accept As A rider?')
+        } else {
+            alert('Error fetching rider requests. Check your backend.');
+        }
+
     };
 
-    const handleCancel = (id) => {
-        setData((prevData) =>
-            prevData.map((data) =>
-                data.id === id ? { ...data, Status: 'Cancelled' } : data
-            )
-        );
-    };
+    const handleCancel = async (id) => {
+        const resp = await fetch(`/api/rider/cancelled/${id}`, {
+            headers: { 'Content-Type': 'application/json' },
+        });
 
-    const handleDelete = (id) => {
-        setData((prevData) => prevData.filter((data) => data.id !== id));
+        if (resp.ok) {
+            alert('Cancelled?')
+        } else {
+            alert('Error. Check your backend.');
+        }
     };
 
     return (
@@ -59,13 +66,14 @@ const RiderRequests = () => {
                             <th className="px-6 py-3">User Name</th>
                             <th className="px-6 py-3">License</th>
                             <th className="px-6 py-3">Status</th>
-                            <th className="px-6 py-3">Actions</th>
+                            <th className="px-6 py-3"><span className="sr-only">Accept</span></th>
+                            <th className="px-6 py-3"><span className="sr-only">Cancel</span></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {datas.filter(data => data.Status !== 'verified' && data.Status !== 'Cancelled').length > 0 ? (
+                        {datas.filter(data => data.Status !== 'verified' && data.Status !== 'cancelled').length > 0 ? (
                             datas
-                                .filter(data => data.Status !== 'verified' && data.Status !== 'Cancelled')
+                                .filter(data => data.Status !== 'verified' && data.Status !== 'cancelled')
                                 .map((data, index) => (
                                     <tr key={data.id || index} className="bg-white border-b hover:bg-gray-50">
                                         <td className="px-6 py-4">{data.userName}</td>
@@ -74,23 +82,17 @@ const RiderRequests = () => {
                                         <td className="px-6 py-4 flex space-x-4">
                                             <button
                                                 className="font-medium text-green-600 hover:underline"
-                                                onClick={() => handleAccept(data.id)}
+                                                onClick={() => handleAccept(data.userName)}
                                                 disabled={data.Status === 'verified'}
                                             >
                                                 Accept
                                             </button>
                                             <button
-                                                className="font-medium text-yellow-600 hover:underline"
-                                                onClick={() => handleCancel(data.id)}
+                                                className="font-medium text-red-600 hover:underline"
+                                                onClick={() => handleCancel(data.userName)}
                                                 disabled={data.Status === 'Cancelled'}
                                             >
                                                 Cancel
-                                            </button>
-                                            <button
-                                                className="font-medium text-red-600 hover:underline"
-                                                onClick={() => handleDelete(data.id)}
-                                            >
-                                                Delete
                                             </button>
                                         </td>
                                     </tr>

@@ -49,7 +49,7 @@ export default function Navbar() {
     ];
 
     if (userName) {
-        if(userRole=='rider'){
+        if (userRole == 'rider') {
             navigation.push(
                 { name: 'Rider Updations', href: '/RiderUpdation' }
             );
@@ -64,6 +64,7 @@ export default function Navbar() {
         if (resp.ok) {
             alert('Logged out successfully');
             window.location.reload();
+            navigate('/')
         }
     };
 
@@ -120,7 +121,7 @@ export default function Navbar() {
                                             to={'/'}
                                             className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                                         >
-                                            Dashboard <br />
+                                            Profile <br />
                                             {userName}
                                         </Link>
                                     </MenuItem>
