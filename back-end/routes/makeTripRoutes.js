@@ -62,7 +62,7 @@ MakeTrip.get('/getAll', authenticate, async (req, res) => {
     if (req.UserRole === 'admin' || req.UserRole === 'rider') {
         try {
             const data = await Trips.find()
-            res.send(Array.from(data.entries()));
+            res.json(data);
             console.log(data);
 
         } catch (error) {
@@ -165,9 +165,9 @@ MakeTrip.patch('/update/:id', authenticate, async (req, res) => {
 
     const id = req.params.id;
     const body = req.body
-    const { startingLocation, endLocation, routes, distance, date, time, vehicle, registrationNumber, availableSeats } = body
+    const { startingLocation, endLocation, routes, distance, date, time, vehicle, registrationNumber, availableSeats, status } = body
 
-    if (req.UserRole === 'rider') {
+    if (req.UserRole === 'rider' || req.UserRole === 'admin') {
 
         try {
 
@@ -185,7 +185,8 @@ MakeTrip.patch('/update/:id', authenticate, async (req, res) => {
                             scheduledTime: time,
                             vehicle: vehicle,
                             vehicleRegistrationNumber: registrationNumber,
-                            availableSeats: availableSeats
+                            availableSeats: availableSeats,
+                            status: status
                         }
                     }
                 );

@@ -9,6 +9,7 @@ import { MakeTrip } from './routes/makeTripRoutes.js';
 import { passengerRoutes } from './routes/Passengers.js';
 import { tripRoutes } from './routes/Trip.js';
 import { paymentRoute } from './routes/payment.js';
+import { fareRoute } from './routes/fareRoutes.js';
 
 
 
@@ -31,7 +32,7 @@ app.use('/trip',MakeTrip);
 app.use('/passenger',passengerRoutes);
 app.use('/tripInitial',tripRoutes);
 app.use('/payment',paymentRoute);
-// app.use('/rating',ratingRoutes)
+app.use('/fare',fareRoute)
 
 const port = process.env.port;
 

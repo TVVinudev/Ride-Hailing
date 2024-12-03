@@ -9,10 +9,11 @@ const AddPayment = () => {
     console.log(rideId);
 
     const [distance, setDistance] = useState('');
-    const [amount, setAmount] = useState('');
+    // const [amount, setAmount] = useState('');
     const [data, setData] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [fares, setFares] = useState([]);
 
     useEffect(() => {
         if (rideId === 'empty') {
@@ -44,15 +45,43 @@ const AddPayment = () => {
         getData();
     }, [rideId]);
 
+
+
+    const fetchData = async () => {
+        try {
+            const resp = await fetch('/api/fare/getAll', {
+                headers: { 'Content-Type': 'application/json' },
+            });
+
+            if (resp.ok) {
+                const data = await resp.json();
+                console.log(data[0]);
+                setFares(data[0]);
+            } else {
+                alert('Error fetching users. Check your backend.');
+            }
+        } catch (error) {
+            console.error('Fetch error:', error);
+            alert('An error occurred while fetching users.');
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, [])
+
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
 
         const paymentData = {
             rideId: rideId,
             pickupLocation: data.pickupLocation,
             dropLocation: data.dropLocation,
             distance,
-            amount,
+            amount: (fares.amount * distance) + fares.additionalFee + fares.peekTimeFee
         };
 
         try {
@@ -101,19 +130,6 @@ const AddPayment = () => {
                         />
                     </div>
 
-                    <div>
-                        <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
-                            Amount
-                        </label>
-                        <input
-                            type="number"
-                            name="amount"
-                            value={amount}
-                            onChange={(e) => setAmount(e.target.value)}
-                            required
-                            className="w-full mt-1 border-gray-300 rounded-md shadow-sm"
-                        />
-                    </div>
 
                     <button
                         type="submit"

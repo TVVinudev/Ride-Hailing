@@ -52,7 +52,8 @@ const makeTripSchema = new Schema({
     scheduledTime: { type: String, required: true },
     vehicle: { type: String, required: true },
     vehicleRegistrationNumber: { type: String, required: true },
-    availableSeats: { type: Number, required: true }
+    availableSeats: { type: Number, required: true },
+    status: { type: String, enum: ['pending', 'approved', 'cancelled'], default: 'pending' }
 });
 
 
@@ -69,7 +70,7 @@ const tripInitial = new Schema({
     tripId: { type: String, ref: 'Trips' },
     rideId: { type: String, required: true, unique: true },
     riderName: { type: String, ref: 'Trips' },
-    bookedUserContact : {
+    bookedUserContact: {
         type: String,
         validate: {
             validator: function (v) { return /\d{10}/.test(v); },
@@ -93,7 +94,7 @@ const paymentSchema = new Schema({
     rideId: { type: String, required: true, unique: true },
     riderName: { type: String, ref: 'Trips' },
     bookUser: { type: String, ref: 'Passenger' },
-    bookedUserContact : {
+    bookedUserContact: {
         type: String,
         validate: {
             validator: function (v) { return /\d{10}/.test(v); },
@@ -121,6 +122,13 @@ const ratingSchema = new Schema({
 });
 
 
+const fareSchema = new Schema({
+    amount: { type: Number, default: 20 },
+    additionalFee: { type: Number, default: 0 },
+    peekTimeFee: { type: Number, default: 0 }
+})
+
+
 // --- Models ---
 const User = mongoose.model('User', userSchema);
 const Rider = mongoose.model('Rider', riderSchema);
@@ -128,7 +136,8 @@ const Passenger = mongoose.model('Passenger', passengerSchema);
 const Trips = mongoose.model('Trip', makeTripSchema);
 const Payment = mongoose.model('Payment', paymentSchema);
 const Rating = mongoose.model('Rating', ratingSchema);
-const TripInitial = mongoose.model('TripInitial', tripInitial)
+const TripInitial = mongoose.model('TripInitial', tripInitial);
+const Fare = mongoose.model('Fare', fareSchema)
 
 
 
@@ -138,4 +147,4 @@ mongoose.connect('mongodb://localhost:27017/Rider')
     .catch(err => console.error('Database connection error:', err));
 
 // --- Export Models ---
-export { User, Rider, Passenger, Trips, Payment, Rating, TripInitial };
+export { User, Rider, Passenger, Trips, Payment, Rating, TripInitial, Fare };

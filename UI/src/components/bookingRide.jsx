@@ -49,7 +49,6 @@ const BookingRide = (username) => {
             });
 
             if (resp.ok) {
-                alert('Ride booked successfully!');
                 navigate('/ridersList/', { state: formData })
 
                 setPickup('');

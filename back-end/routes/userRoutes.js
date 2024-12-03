@@ -116,7 +116,7 @@ userRoutes.get('/logout', authenticate, (req, res) => {
 userRoutes.get('/viewAllUsers', authenticate, async (req, res) => {
     try {
 
-        if (req.UserRole === 'admin') {
+        if (req.UserRole === 'admin' || req.UserRole === 'user' || req.UserRole === 'rider') {
             const userData = await User.find();
             res.status(200).json({ message: "Success", data: userData })
         } else {
@@ -180,12 +180,6 @@ userRoutes.put('/update/:id', authenticate, async (req, res) => {
 
     try {
 
-        if (req.UserRole !== 'admin') {
-            console.log('user not authenticated');
-            return res.status(401).json({ message: "User not authenticated" });
-        }
-
-
         const available = await User.findOne({ userName: userName });
         if (!available) {
             return res.status(404).json({ message: 'Course not found!' });
@@ -223,13 +217,6 @@ userRoutes.patch('/update/:id', authenticate, async (req, res) => {
     const { firstName, lastName, contact, email } = body;
 
     try {
-
-        if (req.UserRole !== 'admin') {
-            console.log('user not authenticated');
-            return res.status(401).json({ message: "User not authenticated" });
-        }
-
-
         const available = await User.findOne({ userName: userName });
         if (!available) {
             return res.status(404).json({ message: 'Course not found!' });

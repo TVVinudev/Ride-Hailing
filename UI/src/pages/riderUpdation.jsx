@@ -75,7 +75,7 @@ const RiderUpdation = () => {
   const completedTrips = trips.filter(trip => ['dropped', 'cancelled'].includes(trip.status.toLowerCase()));
 
   return (
-    <div className="p-6 max-w-full bg-gray-100 h-screen">
+    <div className="p-6 max-w-full bg-gray-100 min-h-screen">
       <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-lg p-6">
         <h1 className="text-3xl font-semibold text-gray-800 mb-4">Ride Details</h1>
         <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />

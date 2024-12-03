@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 const PaymentTable = () => {
     const [datas, setData] = useState([]);
 
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -14,8 +15,8 @@ const PaymentTable = () => {
                     const result = await resp.json();
                     console.log('Fetched payments:', result);
 
-                    
-                    setData(result || []);  
+
+                    setData(result || []);
                 } else {
                     alert('Error fetching payment data. Check your backend.');
                 }
@@ -71,7 +72,7 @@ const PaymentTable = () => {
                     </thead>
                     <tbody>
                         {datas.length > 0 ? (
-                            datas.map((data, index) => (
+                            [...datas].reverse().map((data, index) => (
                                 <tr key={index} className="bg-white border-b hover:bg-gray-50">
                                     <td className="px-6 py-4">{data.rideId}</td>
                                     <td className="px-6 py-4">{data.riderName}</td>
@@ -99,6 +100,7 @@ const PaymentTable = () => {
                             </tr>
                         )}
                     </tbody>
+
                 </table>
             </div>
         </div>

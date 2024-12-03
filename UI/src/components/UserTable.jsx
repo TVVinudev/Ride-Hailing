@@ -14,11 +14,11 @@ const UsersTable = ({ dashboard }) => {
                     const data = await resp.json();
                     const sortedUsers = data.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-                    // Conditional logic based on dashboard prop
+                   
                     if (dashboard === true) {
-                        setUsers(sortedUsers.slice(0, 3)); // Show only the latest 3 users for the dashboard
+                        setUsers(sortedUsers.slice(0, 3)); 
                     } else {
-                        setUsers(sortedUsers); // Show all users
+                        setUsers(sortedUsers); 
                     }
                 } else {
                     alert('Error fetching users. Check your backend.');
@@ -30,7 +30,7 @@ const UsersTable = ({ dashboard }) => {
         };
 
         fetchData();
-    }, [dashboard]); // Dependency array includes `dashboard` to re-fetch if it changes
+    }, [dashboard]); 
 
     const handleDeleteUser = async (userName) => {
         try {

@@ -18,6 +18,9 @@ import RiderDetails from './pages/rider';
 import Trips from './pages/trips';
 import User from './pages/User';
 import Payment from './pages/Payment';
+import TripVerification from './pages/tripVerification';
+import AddFareData from './pages/fare';
+import Profile from './pages/Profile';
 
 const App = () => {
   return (
@@ -37,6 +40,7 @@ const App = () => {
           <Route path='/displayPayment' element={<DisplayPayment />} />
           <Route path='/riderUpdation' element={<RiderUpdation />} />
           <Route path='/addPayment' element={<AddPayment />} />
+          <Route path='/profile/:id' element={<Profile />} />
         </Route>
 
         <Route element={<AdminLayout />}>
@@ -45,6 +49,8 @@ const App = () => {
           <Route path='/trips' element={<Trips />} />
           <Route path='/users' element={<User />} />
           <Route path='/payments' element={<Payment />} />
+          <Route path='/tripVerification' element={<TripVerification />} />
+          <Route path='/addFare' element={<AddFareData />} />
         </Route>
 
       </Routes>

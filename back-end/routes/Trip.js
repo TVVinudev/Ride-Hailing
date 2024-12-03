@@ -12,8 +12,11 @@ tripRoutes.post('/addData', authenticate, async (req, res) => {
     const body = req.body;
     const { tripId, riderName, bookUser, startingLocation, endingLocation, passengersName, pickupLocation, dropLocation, date, bookedSeats } = body;
 
+    console.log(tripId, riderName, bookUser.username, startingLocation, endingLocation, passengersName, pickupLocation, dropLocation, date, bookedSeats);
+    
+
     const now = new Date();
-    const rideId = bookUser + now.getFullYear() + now.getMonth() + now.getDate() + now.getHours() + now.getMinutes() + now.getMilliseconds();
+    const rideId = bookUser.username + now.getFullYear() + now.getMonth() + now.getDate() + now.getHours() + now.getMinutes() + now.getMilliseconds();
 
     const resp = await TripInitial.findOne({ rideId: rideId });
     if (resp) {
@@ -21,7 +24,7 @@ tripRoutes.post('/addData', authenticate, async (req, res) => {
     }
 
     try {
-        const result = await User.findOne({ userName: bookUser });
+        const result = await User.findOne({ userName: bookUser.username });
         console.log(result);
 
         if (user) {
@@ -30,7 +33,7 @@ tripRoutes.post('/addData', authenticate, async (req, res) => {
                 tripId: tripId,
                 rideId: rideId,
                 riderName: riderName,
-                bookUser: bookUser,
+                bookUser: bookUser.username,
                 bookedUserContact: result.contact,
                 startingLocation: startingLocation,
                 endingLocation: endingLocation,
@@ -110,42 +113,6 @@ tripRoutes.patch('/updateStatus/:id', authenticate, async (req, res) => {
                 return res.status(500).json({ message: 'Failed to fetch trip details', error: findError.message });
             }
         }
-
-        if (status === 'cancelled' || status === 'dropped') {
-            try {
-                const tripDetails = await TripInitial.findOne({ rideId: id });
-
-                if (!tripDetails) {
-                    return res.status(404).json({ message: 'Trip details not found after status update' });
-                }
-
-                if (tripDetails.tripId) {
-                    try {
-                        const tripInfo = await Trips.findOne({ tripId: tripDetails.tripId });
-
-                        if (!tripInfo) {
-                            return res.status(404).json({ message: 'Linked trip not found' });
-                        }
-
-                        const balanceSeat = tripInfo.availableSeats + tripDetails.bookedSeats;
-
-                        await Trips.updateOne(
-                            { tripId: tripDetails.tripId },
-                            { $set: { availableSeats: balanceSeat } }
-                        );
-
-                        console.log(`Available seats updated for tripId: ${tripDetails.tripId}, new balance: ${balanceSeat}`);
-                    } catch (seatUpdateError) {
-                        console.error(`[Error] Updating available seats for tripId: ${tripDetails.tripId} - ${seatUpdateError.message}`);
-                        return res.status(500).json({ message: 'Failed to update available seats', error: seatUpdateError.message });
-                    }
-                }
-            } catch (findError) {
-                console.error(`[Error] Fetching trip details failed for rideId: ${id} - ${findError.message}`);
-                return res.status(500).json({ message: 'Failed to fetch trip details', error: findError.message });
-            }
-        }
-
 
         res.status(200).json({
             message: 'Status updated successfully',

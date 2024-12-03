@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 
-const DashboardCards = () => {
-    const [users, setUsers] = useState([]);
-    const [trip, setTrip] = useState([]);
+const FareCard = () => {
+    const [fares, setFares] = useState([]);
 
 
     const fetchData = async () => {
         try {
-            const resp = await fetch('/api/viewAllUsers', {
+            const resp = await fetch('/api/fare/getAll', {
                 headers: { 'Content-Type': 'application/json' },
             });
 
             if (resp.ok) {
                 const data = await resp.json();
-                setUsers(data.data); 
+                console.log(data[0]);
+                setFares(data[0]);
             } else {
                 alert('Error fetching users. Check your backend.');
             }
@@ -23,29 +23,16 @@ const DashboardCards = () => {
         }
     };
 
-    const fetchTrip = async () => {
-        const resp = await fetch('/api/tripInitial/viewAll', {
-            headers: { 'Content-Type': 'application/json' },
-        });
-
-        if (resp.ok) {
-            const data = await resp.json();
-            setTrip(data.data);
-        }
-    }
-
     useEffect(() => {
         fetchData();
-        fetchTrip()
     }, [])
 
 
-    const riderCount = users.filter((user) => user.role === 'rider').length;
 
     const cards = [
-        { title: 'Users', count: users.length -1, color: 'text-lime-500' },
-        { title: 'Riders', count: riderCount, color: 'text-red-500' },
-        { title: 'Trips', count: trip.length, color: 'text-blue-500' }, 
+        { title: 'Base Fee', count: fares.amount, color: 'text-lime-500' },
+        { title: 'Additional Fee', count: fares.additionalFee, color: 'text-red-500' },
+        { title: 'Peek Time Fee', count: fares.peekTimeFee, color: 'text-blue-500' }, 
     ];
 
     return (
@@ -57,12 +44,12 @@ const DashboardCards = () => {
                 >
                     <div className="text-center">
                         <h6 className="text-gray-400 text-sm">{card.title}</h6>
-                        <span className={`text-[40px] font-bold ${card.color}`}>{card.count}</span>
+                        <span className={`text-[40px] font-bold ${card.color}`}>₹{card.count}</span>
                     </div>
                 </div>
             ))}
         </div>
-    );
-};
+    )
+}
 
-export default DashboardCards;
+export default FareCard
